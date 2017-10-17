@@ -5,7 +5,8 @@ Anna Bonazzi, 06/09/2017
 Script to find collocates of specific words from a corpus.
 
 What the script does:
-	1) Picks corpus texts with chosen language, puts them together
+	0) Allows to search by plain word or by regex
+	1) Picks portions of corpus texts with chosen language and containing chosen word, puts them together as a list.
 	2) Finds collocations (basis-collocate pairs) in window of given size
 	3) Selects collocations containing the desired searchword / searchword variants (through regex)
 	4) Sorts the searchword's collocates by pmi or log-likelihood value
