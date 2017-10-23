@@ -15,7 +15,7 @@ output_folder = '/path/to/keywords_folder/'
 min_freq = 20 # Minimum frequency of keyword candidates
 lang = 'fr'
 unit = 'lemma' # Options: 'wordform', 'lemma', 'pos'
-attempt = 8
+
 #--------------------------
 # To time the script
 from datetime import datetime
@@ -31,7 +31,7 @@ sources = {} # Prepares to save text source names to skip doubles
 
 # Extracts texts with chosen features from corpus
 def text_from_corpus(corpus, flag):
-	print ('Searching '+corpus+'... patience.')
+	print (' Searching '+corpus+'... patience.')
 	word_tot = 0
 	word_dic = {}
 	text_counter = 0
@@ -70,30 +70,17 @@ def text_from_corpus(corpus, flag):
 									else:
 										word_dic[word] = 1
 				chunk = []
-				if '00000' in str(text_counter):
+				if '00000' in str(text_counter): # To keep track
 					print (str(text_counter))
 		return (word_tot, word_dic)
 
 word_tot1, word_dic1 = text_from_corpus(corpus1, 0)
 word_tot2, word_dic2 = text_from_corpus(corpus2, 1)
 
-'''
-with open (corpus1, 'r') as f:
-	data = f.read()
-	textlist = data.split(' ')
-word_tot1 = 0
-word_dic1 = {}
-for word in textlist:
-	word.strip('\n').strip('.').strip(',').strip('?').strip('»').strip('«')
-	word_tot1 += 1
-	if word in word_dic1:
-		word_dic1[word] += 1
-	else:
-		word_dic1[word] = 1
-'''
-keywords = {}
+keywords = {} # Keywords with value > 3.8
 all_keywords = {}
 
+# Calculates each word's log-likelihood value
 for word in word_dic1:
 	# Skips stopwords, words with symbols, and rare words
 	regex = re.search('.*?\W.*?', word)
@@ -103,22 +90,22 @@ for word in word_dic1:
 		# Expected freq e1 = c*(a+b) / (c+d), e2 = d*(a+b) / (c+d)
 		e1 = float(word_tot1 * (word_dic1[word] + word_dic2[word]) / (word_tot1 + word_tot1))
 		e2 = float(word_tot2 * (word_dic1[word] + word_dic2[word]) / (word_tot1 + word_tot1))
-		# Log-lik = 2*((a*ln (a/E1)) + (b*ln (b/E2)))
+		# Log-lik = 2*((a*ln (a/e1)) + (b*ln (b/e2)))
 		loglik = 2 * ((word_dic1[word] * np.log(word_dic1[word]/e1)) + ((word_dic2[word] * np.log(word_dic2[word]/e2))))
 
 		if loglik >= 3.8:
 			keywords[word] = loglik
-		else:
-			all_keywords[word] = loglik
+		all_keywords[word] = loglik
 
+	# Sorts and prints out
 sorted_tuples = sorted(keywords.items(), key=lambda pair: pair[1], reverse=True)
-with open (output_folder+lang+'_'+str(attempt)+'geothermie.txt', 'a') as out:
+with open (output_folder+lang+'_geothermie.txt', 'a') as out:
 	for tup in sorted_tuples:
 		print (str(tup[0].encode('utf-8')) + "\t" + str(tup[1]).encode('utf-8') + "\n")
 		out.write(str(tup[0].encode('utf-8')) + "\t" + str(tup[1]).encode('utf-8') + "\n")
 
 sorted_tuples = sorted(all_keywords.items(), key=lambda pair: pair[1], reverse=True)
-with open (output_folder+lang+'_'+str(attempt)+'geothermie_all.txt', 'a') as out:
+with open (output_folder+lang+'_geothermie_all.txt', 'a') as out:
 	for tup in sorted_tuples:
 		out.write(str(tup[0].encode('utf-8')) + "\t" + str(tup[1]).encode('utf-8') + "\n")
 		
