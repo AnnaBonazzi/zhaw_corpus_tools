@@ -2,9 +2,7 @@
 '''
 Anna Bonazzi, 22/08/2017
 
-Script to make a network chart.
-
-Network of the collocates of a chosen word in four different classes. 
+Script to make a network chart. Network of the collocates of a chosen word in four different classes. 
 
 Developed from model on https://www.udacity.com/wiki/creating-network-graphs-with-python
 
@@ -13,7 +11,8 @@ Current settings for python 2.7. For python 3, comment out all the ".decode('utf
 #--------------------------
 # VARIABLES FOR USER TO CHANGE:
 
-keyword = 'Geothermie'
+keyword = 'Geothermie', filename = 'géo'
+
 color_scale = 'red_scale' # Options: black_scale, blue_scale, lightblue_scale, green_scale, lightgreen_scale, orange_scale, brown_scale, red_scale,  pink_scale
 
 txtcolor = '#3c3838' # Choose color codes from http://htmlcolorcodes.com/
@@ -22,8 +21,9 @@ node_font_size = 13
 title_font_size = 16
 graph_layout = 'spring' # Options: spring, spectral, random, shell
 
-# Input folder (current setting: folder containing several class-folders. Each class-folder contains collocations files)
-folder = "/home/bonz/Documents/Corpus_work/GEothermie2020/collocates/bearbeitet/log-lik_nltk/adj-nouns/" 
+# Input folder (current setting: folder containing several class-folders. Each class-folder contains collocations files).
+# Files currently named as: language_class_searchword.txt
+folder = "/path/to/folder/containing/class_folders/" 
 #--------------------------
 # To time the script
 from datetime import datetime
@@ -41,7 +41,7 @@ graph = []
 class_names = []
 os.chdir(folder)
 
-files = glob.glob("*/*" + 'géo' + ".txt")
+files = glob.glob("*/*" + filename + ".txt")
 for file1 in files:
 	class_names.append(file1[0:3].upper())
 	with open (file1, 'r') as f:
