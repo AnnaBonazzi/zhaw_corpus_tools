@@ -16,8 +16,8 @@ What the script does:
 #--------------------------
 # VARIABLES FOR USER TO CHANGE:
 
-search_words = ['genevois', 'énergie']#, 'stratégie énergétique']
-reg_ex = {'genevois' : '(?i)genevoise?s?', 'énergie' : '(?i)énergies?'} # If you don't want to search by regex, comment this line out
+search_words = ['genevois', 'stratégie énergétique']
+reg_ex = {'genevois' : '(?i)genevoise?s?', 'stratégie énergétique' : '(?i)stratégies? énergétiques?'} # If you don't want to search by regex, comment this line out
 
 lang = 'fr'
 
