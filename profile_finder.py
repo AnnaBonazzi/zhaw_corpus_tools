@@ -13,13 +13,6 @@ What the script does:
 	4) Counts relative frequency of profile words (% of the frequency of searchword in that source)
 	5) Represents results as table where rows are sources and columns are profiles.
 
-	economic	political		Density
-acg	20	8		28
-agrige	0	0		0
-ibarau	16	8		24
-
-Total	36	16
-
 Current settings for python 2.7 (for python 3, comment all the ".decode('utf-8')" out).
 '''
 #--------------------------
