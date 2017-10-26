@@ -8,6 +8,8 @@ For more / less words: add/remove a new keyword, a new dic, a new "make_bar"-fun
 '''
 # VARIABLES FOR USER TO CHANGE
 
+output_file = '/path/to/image_file.png' # To save the figure
+
 keyw1 = 'Nucléaire / atomique'.decode('utf-8')	
 keyw2 = 'Géothermie / géothermique'.decode('utf-8')	
 keyw3 = 'Solaire / photovoltaique'.decode('utf-8')	
@@ -121,6 +123,8 @@ plt.ylabel(y_axis_title, fontsize = 14)
 
 
 ax.autoscale(tight=False)
+fig = plt.gcf()
+fig.savefig(output_file, bbox_inches='tight')
 plt.show()
 
 #matplotlib.pyplot.barh(yaxis, ywidths, 1, xaxis, x_labels)
