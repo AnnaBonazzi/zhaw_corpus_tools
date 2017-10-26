@@ -121,13 +121,11 @@ ax.grid(color='paleturquoise', linestyle='-.', linewidth=0.5) # Requires ax = fi
 plt.title(title, fontsize = 14)
 plt.ylabel(y_axis_title, fontsize = 14)
 
-
+# Save and show
 ax.autoscale(tight=False)
 fig = plt.gcf()
 fig.savefig(output_file, bbox_inches='tight')
 plt.show()
-
-#matplotlib.pyplot.barh(yaxis, ywidths, 1, xaxis, x_labels)
 
 #--------------------------
 # To time the script
