@@ -66,9 +66,10 @@ ax = plt.subplot(111)
 # Sets number of bar groups
 xlist = []; dist = 0.31; n = 2; xlist.append(n)
 for i in range(1, number_of_bar_groups):
-	n = n + 3
+	n = n + 3 # Tweak this number to make bar groups closer / farther
 	xlist.append(n)
 #xlist = [2, 5, 8, 11]
+
 def make_bars(dic, dist, bar_color):
 	ax.bar([x + dist for x in xlist], dic.values(),width=0.3, align='center', color=bar_color) 
 	
