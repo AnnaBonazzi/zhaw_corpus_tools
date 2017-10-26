@@ -3,9 +3,7 @@
 Anna Bonazzi, 16/08/2017
 
 Script to make a plot of corpus words frequency for each corpus class or language, depending on the format of the input data.
-
 Every keyword has its frequency dic with frequency per class/language.
-
 For more / less words: add/remove a new keyword, a new dic, a new "make_bar"-function at line 75, and a new keyword in the 
 '''
 # VARIABLES FOR USER TO CHANGE
