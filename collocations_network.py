@@ -17,8 +17,8 @@ color_scale = 'red_scale' # Options: black_scale, blue_scale, lightblue_scale, g
 
 txtcolor = '#3c3838' # Choose color codes from http://htmlcolorcodes.com/
 txtfont = 'DejaVu Sans'
-node_font_size = 13
-title_font_size = 16
+node_font_size = 14
+title_font_size = 20
 graph_layout = 'spring' # Options: spring, spectral, random, shell
 
 # Input folder (current setting: folder containing several class-folders. Each class-folder contains collocations files).
@@ -80,16 +80,16 @@ all_colors = {'red_scale' : {'col1' : 'mistyrose', 'col2' : 'lightcoral', 'col3'
 for word in freq_dic:
 	if freq_dic[word] > 5:
 		color_map.append(all_colors[color_scale]['col4'])
-		size_map.append(1600)
+		size_map.append(1800)
 	elif freq_dic[word] >2 and freq_dic[word] <5:
 		color_map.append(all_colors[color_scale]['col3'])
-		size_map.append(1400)
+		size_map.append(1600)
 	elif freq_dic[word] >1 and freq_dic[word] <=2:
 		color_map.append(all_colors[color_scale]['col2'])
-		size_map.append(1200)
+		size_map.append(1400)
 	else: 
 		color_map.append(all_colors[color_scale]['col1'])
-		size_map.append(800)
+		size_map.append(1000)
 	
 # Nodes
 nx.draw_networkx_nodes(G, graph_pos, node_size=size_map, alpha=0.3, node_color =color_map)
