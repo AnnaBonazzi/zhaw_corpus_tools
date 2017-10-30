@@ -14,19 +14,14 @@ Current settings (".encode/.decode('utf-8)") for python2.7. Comment it out for p
 #--------------------------
 # VARIABLES FOR USER TO CHANGE:
 
-#input_file = '/home/bonz/releases/sep17v2.vrt'
-#output_folder = '/home/bonz/Corpus_work/GEothermie2020/collocates/'
-input_file = '/home/bonz/Documents/Corpora/geothermie_test3.vrt'
-output_folder = '/home/bonz/Documents7Corpus_work/GEothermie2020/frequenz/' # To save word frequencies
-diagram_file = '/home/bonz/Documents7Corpus_work/GEothermie2020/frequenz/energy_types.py'
+input_file = '/path/to/corpus_file.vrt'
+output_folder = '/path/to/word-frequency_folder/' # To save word frequencies
+diagram_file = '/path/to/diagram_image_file.png'
 
 lang = 'de'
 regexes = {'Nuklear-Atom' : '(nuklear.*|atom.*)', 'Geothermie' : 'geotherm.*', 'Solarkraft':'(sonnen(k|e).*|solar(k|e).*|photovolt.*)', 'Fossil':'(fossil.*?|kohl.*?)', 'Erneuerbar':'erneuerb.*', 'Windkraft':'windk.*?', 'Biomasse':'Biomas.*', 'Wasserkraft':'(wasser(k|e).*|hydroel.*)', 'Holzenergie':'holz-?(kr|en).*?'}
  # Uppercase/Lowercase will be fixed later
 legend_names = sorted(regexes.keys()) # Keywords are in alphabetic order
-
-for l in legend_names:
-	print(l)
 
 # Run from here. Or set more options:
 
