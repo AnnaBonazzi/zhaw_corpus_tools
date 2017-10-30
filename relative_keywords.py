@@ -2,16 +2,16 @@
 '''
 Anna Bonazzi, 06/10/2017
 
-Script to extract keywords from a corpus by comparing it to another corpus and selecting the words with a larger relative frequency
+Script to extract keywords from a corpus by comparing it to another larger corpus and picking the words with a larger relative frequency
 
-Keywords: words whose relative frequency is bigger in the small corpus. Keywords are sorted by the difference in rel freq between corpus 1 and corpus 2: words with a rel freq that is hugely superior in corpus 1 come first.
+Keywords: words whose relative frequency is bigger in the main corpus. Keywords are sorted by the difference in rel freq between corpus 1 and corpus 2: words with a rel freq that is hugely superior in corpus 1 come first.
 
 '''
 # VARIABLES FOR USER TO CHANGE
 
-corpus1 = '/home/bonz/Corpora/geothermie.vrt' # Interesting corpus
-corpus2 = '/home/bonz/Corpora/julirelease.vrt' # Big comparison corpus
-output_folder = '/home/bonz/Corpus_work/GEothermie2020/keywords/'
+corpus1 = '/path/to/main_corpus.vrt' # Interesting corpus
+corpus2 = '/path/to/comparison_corpus.vrt' # Big comparison corpus
+output_folder = '/path/to/keywords_folder/'
 min_freq = 2 # Minimum frequency of keyword candidates
 lang = 'fr'
 unit = 'lemma' # Options: 'wordform', 'lemma', 'pos'
@@ -72,20 +72,6 @@ def rel_freq(word_tot, word_dic):
 rel_freq1 = rel_freq(word_tot1, word_dic1)
 rel_freq2 = rel_freq(word_tot2, word_dic2)
 
-'''
-with open (corpus1, 'r') as f:
-	data = f.read()
-	textlist = data.split(' ')
-word_tot1 = 0
-word_dic1 = {}
-for word in textlist:
-	word.strip('\n').strip('.').strip(',').strip('?').strip('»').strip('«')
-	word_tot1 += 1
-	if word in word_dic1:
-		word_dic1[word] += 1
-	else:
-		word_dic1[word] = 1
-'''
 keywords = {}
 
 for word in rel_freq1:
