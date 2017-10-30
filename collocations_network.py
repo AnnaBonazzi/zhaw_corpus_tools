@@ -48,7 +48,7 @@ for file1 in files:
 	with open (file1, 'r') as f:
 		for line in f:
 			line = line.decode('utf-8')
-			graph.append((classes[file1[0:3]], line.strip('\n'))) # line.split('\t')[0]
+			graph.append((classes[file1[0:3]].decode('utf-8'), line.strip('\n').decode('utf-8'))) # line.split('\t')[0]
 
 # Adds edges, collects frequency of each node
 freq_dic = {} 
