@@ -44,7 +44,7 @@ for lang in languages:
 	elif lang == 'en':
 		regexes = {'Nuclear' : '(nuclear.*?|^atom.*)', 'Geothermal' : 'geotherm.*', 'Solar':'(solar.*?|photovolt.*)', 'Fossil':'(fossil|coals?)', 'Renewable':'renewables?', 'Wind':'wind$', 'Biomass':'Biomasse?s?', 'Water energy':'(hydroel|hydraul)', 'Wood':'(wood$|timber)'}
 		word_counter = 0
-
+	switch = 0
 	# Prepares dictionaries to save classes
 	pab ={}; pbv = {}; peb = {}; pfu = {}
 	def initiate_dic(dic, regexes):
@@ -77,19 +77,26 @@ for lang in languages:
 					old_cl = cl
 				else:
 					cl = old_cl
-				# Finds languages
-				languages = re.findall('(de=".*?)".*?(en=".*?)".*?(fr=".*?)".*?(it=".*?)".*?(other=".*?)"', ''.join(chunk))
-				# Makes lang - percent pairs
-				lang_dic = {}
-				if languages:
-					for l in list(languages[0]):
-						lang_dic[l.split('="')[0]] = float(l.split('="')[1])
+				try:
+					regex1 = 
+					if regex1:
+						switch = 1
+				except:
+					# Finds languages
+					languages = re.findall('(de=".*?)".*?(en=".*?)".*?(fr=".*?)".*?(it=".*?)".*?(other=".*?)"', ''.join(chunk))
+					# Makes lang - percent pairs
+					lang_dic = {}
+					if languages:
+						for l in list(languages[0]):
+							lang_dic[l.split('="')[0]] = float(l.split('="')[1])
 
-					# Sorts percents to find the highest	
-					languages = [float(l.split('="')[1]) for l in list(languages[0])]
-					languages.sort()
-					if lang_dic[lang] == languages[-1]:
-						# Selects desired language
+						# Sorts percents to find the highest	
+						languages = [float(l.split('="')[1]) for l in list(languages[0])]
+						languages.sort()
+						if lang_dic[lang] == languages[-1]:
+							# Selects desired language
+							switch = 1
+					if switch == 1:
 						for word in chunk:
 							if '<' not in word:
 								word_counter += 1
