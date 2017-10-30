@@ -11,8 +11,8 @@ Current settings for python 2.7. For python 3, comment out all the ".decode('utf
 #--------------------------
 # VARIABLES FOR USER TO CHANGE:
 
-keyword = 'Geothermie', filename = 'géo'
-
+keyword = 'Fukushima'
+lang = 'de'
 color_scale = 'red_scale' # Options: black_scale, blue_scale, lightblue_scale, green_scale, lightgreen_scale, orange_scale, brown_scale, red_scale,  pink_scale
 
 txtcolor = '#3c3838' # Choose color codes from http://htmlcolorcodes.com/
@@ -39,15 +39,16 @@ G=nx.Graph()
 # Prepares content as a list of tuples (keyword, collocate))
 graph = []
 class_names = []
+classes = {'pab' : keyword+'\nWirtschaft', 'pbv' : keyword+'\nMedien', 'peb' : keyword+'\nWissenschaft', 'pfu' : keyword+'\nPolitik'}
 os.chdir(folder)
 
-files = glob.glob("*/*" + filename + ".txt")
+files = glob.glob("*/"+lang+"*" + keyword + ".txt")
 for file1 in files:
 	class_names.append(file1[0:3].upper())
 	with open (file1, 'r') as f:
 		for line in f:
 			line = line.decode('utf-8')
-			graph.append((''.join(file1[0:3].upper()), line.strip('\n'))) # line.split('\t')[0]
+			graph.append((classes[file1[0:3]], line.strip('\n'))) # line.split('\t')[0]
 
 # Adds edges, collects frequency of each node
 freq_dic = {} 
