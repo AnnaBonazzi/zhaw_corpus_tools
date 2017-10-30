@@ -8,11 +8,11 @@ Selected sources are given through their short name as found in the <text> line 
 #--------------------------
 # VARIABLES FOR USER TO CHANGE
 
-corpus = '/media/bonz/Windows/Users/bonz/Documents/Corpora/julirelease.vrt'
-selected_sources = '/home/bonz/Documents/Corpus_work/medien_quellen.txt'
+corpus = '/path/to/big_corpus_file.vrt'
+selected_sources = '/path/to/file/with/corpus_source_names.txt'
 # OR
 #sources = ['20min', 'tribune']
-new_subcorpus = '/home/bonz/Documents/Corpora/medien_jul17.vrt'
+new_subcorpus = '/path/to/new_subcorpus.vrt'
 
 #--------------------------
 # To time the script
@@ -53,13 +53,7 @@ with open (corpus, 'r') as f:
 					counter += 1
 					if '0000' in str(counter):
 						print (str(counter))
-					'''
-					# Clears possible file beginning and ending lines
-					if 'encoding=' in '\n'.join(chunk):
-						del chunk[0:1]
-					if '</corpus' in '\n'.join(chunk):
-						del chunk[-1]
-					'''
+					
 					fhandle.write(''.join(chunk))
 			chunk = [] # resets empty list
 			# Now starts accumulating lines again until next text-end
