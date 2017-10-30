@@ -120,9 +120,10 @@ nx.draw_networkx_edge_labels(G, graph_pos, label_pos=0.3, edge_labels=edge_label
 # Title
 if keyword == 'cantone':
 	keyword = 'canton'
-plt.title('"' + keyword + '"\n\nKollokatoren (Nomina und Adjektive) nach Klasse', color=txtcolor, fontname = txtfont, fontsize = title_font_size)
+plt.title('"' + keyword + '"\n\nKollokatoren nach Akteursklasse - Sep \'17 Release', color=txtcolor, fontname = txtfont, fontsize = title_font_size)
 
 # Legend
+'''
 labels_string = ''
 labels_names = {'PAB': ' PAB: Wirtschaft\n', 'PBV' : ' PBV: Medien\n', 'PEB' : ' PEB: Wissenschaft\n', 'PFU' : ' PFU: Politik'}
 for cl in labels_names:
@@ -137,7 +138,7 @@ for text in leg.get_texts():
 	text.set_fontsize(12)
 	text.set_fontname(txtfont)
 	text.set_color(txtcolor)
-	
+'''	
 # Shows graph
 plt.show()
 
