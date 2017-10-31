@@ -8,7 +8,7 @@ Makes ngrams for different corpus sections (in this case, corpus is divided by c
 Option 1) uses nltk (respects capitalization, accepts 1 ngram length only)
 Option 2) uses scikit-learn (doesn't respect capitalization, accepts a min and max ngram length window. Currently commented out).
 
-Current settings with ".decode('utf-8')" for python 2.7. Comment out for python 3
+('.decode('utf-8')' mess necessary for python 2.7, not for python 3)
 
 Basic structure:
 text = 'In a hole in the ground there lived a hobbit'
@@ -42,13 +42,15 @@ output_folder = '/path/to/ngrams_folder/'
 
 langs = ['it', 'de', 'fr', 'en']
 unit = 'wordform' # 'wordform', 'pos', 'lemma'
-n = 3 # Ngram window with nltk
+n = 6 # Ngram window with nltk
 min_ = 5; max_ = 5 # Ngram window with sci-kit learn
 
 min_freq = 2 # Minimum ngram frequency
 max_number = 500 # Number of ngrams to show
 
-searchword = 'hobbit' # Comment out if not needed
+regex_lang = {'it' : '(r|R)innovabil.*?', 'en' : '(R|r)enewab.*?', 'fr' : '(R|r)enouvelab.*?', 'de': '(E|e)rneuerbar.*?'} # Comment out if not needed
+
+#searchword = 'Erneuerbar' # Comment out if not needed
 #------------------------------
 
 from sklearn.metrics.pairwise import cosine_similarity
@@ -72,15 +74,17 @@ for lang in langs:
 		for line in f:
 			if '</text>' not in line: # Works text by text
 				if '<' not in line:
-					chunk.append(line.split("\t")[units[unit]].decode('utf-8'))
+					chunk.append(line.split("\t")[units[unit]])#.decode('utf-8'))
 				elif '<text' in line or '</s' in line:
 					chunk.append(line)
 				
 			else: # Meets text end, works on temporary text chunk
-				chunk.append(line.decode('utf-8'))
+				chunk.append(line)#.decode('utf-8'))
 			  	# Searches for chosen lang/class combination
-				regex = re.search('class="(.*?)".*?language="'+lang+'"', ''.join(chunk))
-				if regex:
+				regex = re.search('class="(.*?)".*?language="'+lang+'".*?', ''.join(chunk))
+				# Filters for regex
+				regex2 = re.search(regex_lang[lang], ''.join(chunk))
+				if regex and regex2:
 					cl = regex.group(1)
 					for word in chunk:
 						if '<text' not in word and '</text' not in word:
@@ -114,11 +118,13 @@ for lang in langs:
 		for g in grams:
 			tot_grams += 1
 			try:
-				if '</s>' not in g and searchword in g: # If searchword is given
-					if g in sorted_ngrams:
-						sorted_ngrams[g] += 1
-					else:
-						sorted_ngrams[g] = 1
+				regex = re.search(regex_lang[lang], ' '.join(g))
+				if regex:
+					if '</s>' not in g: # If searchword is given
+						if g in sorted_ngrams:
+							sorted_ngrams[g] += 1
+						else:
+							sorted_ngrams[g] = 1
 			except:
 				if '</s>' not in g: # Respects sentence boundary
 					if g in sorted_ngrams:
@@ -128,14 +134,13 @@ for lang in langs:
 
 		sorted_tuples = sorted(sorted_ngrams.items(), key=lambda pair: pair[1], reverse=True)
 		count = 0
-		with open (output_folder + str(n)+'-grams_'+lang+'_'+text[1]+'_'+unit+'.txt', 'a') as out:
+		with open (output_folder + str(n)+'-grams_'+lang+'_'+text[1]+'_'+searchword+'_'+unit+'.txt', 'a') as out:
 			for tup in sorted_tuples:
 				if tup[1] >= min_freq and count <= max_number and '</s>' not in tup[0]:
 					count += 1
 					# Counts frequency per million 
 					pmi = float('{:.2f}'.format(int(tup[1]) * 1000000 / tot_grams))
-					out.write(str(pmi) + '\t' + ' '.join(tup[0]).encode('utf-8') + '\n')
-					print(str(pmi).decode('utf-8') + '\t' + ' '.join(tup[0]) + '\n')
+					out.write(str(pmi) + '\t' + str(tup[1]) + '\t' + str(' '.join(tup[0])) + '\n')
 					
 	sorted_tuples = {}
 				
