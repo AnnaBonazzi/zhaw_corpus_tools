@@ -2,20 +2,11 @@
 '''
 Anna Bonazzi, 16/08/2017
 
-# Script to make a plot of corpus words frequency evolution by language.
+Script to make a plot of corpus word frequency evolution over time by language.
 Word frequency is taken from the corpus.vrt file, one text at a time. 
 
 Works both for corpora with a "language" attribute and for corpora with different percentages for each language
 '''
-# To time the script
-from datetime import datetime
-startTime = datetime.now()
-
-import os, glob, re
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-#--------------------------
 # VARIABLES FOR USER TO CHANGE:
 
 corpus = '/home/bonz/Documents/Corpora/geothermie_test3.vrt'
@@ -30,16 +21,23 @@ regex_en = '(G|g)(e|é)o(t|th)erm.*?'
 regex_it = '(G|g)(e|é)o(t|th)erm.*?'
 
 # Time window to search
-min_year = 2007
-max_year = 2017
+min_year = 2007; max_year = 2017
 
 frequency = 'per_million' # Options: 'absolute', 'per_million'
+unit = 'word' # Options: 'word', 'pos', 'lemma'
 
 # Overall plot attributes
 myfont = 'DejaVu Sans' # Arial
 fontcolor = '#185a92' # Pick colors from http://htmlcolorcodes.com/
 #--------------------------
-
+# To time the script
+from datetime import datetime
+startTime = datetime.now()
+import os, glob, re
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+#--------------------------
 
 # 1) Collects data
 
@@ -51,7 +49,7 @@ all_words = {}
 # Temporary text chunk to be analyzed
 chunk = []
 
-# List of sources to be searched for specific queries (e.g. media) 
+# Optional ist of sources to be searched for specific queries (e.g. media) 
 sources = []
 try:
 	with open (selected_sources, 'r') as f:
@@ -66,7 +64,8 @@ with open (corpus, 'r') as f:
 	for line in f:
 		if '</text>' not in line:
 			if '<' not in line:
-				word = line.split("\t")[2] # 0 wordform, 1 pos, 2 lemma
+				units = {'word' : 0, 'pos' : 1, 'lemma' : 2}
+				word = line.split("\t")[units[unit]] # 0 wordform, 1 pos, 2 lemma
 				chunk.append(word) # Fills temporary text chunk with lemmas
 			elif '<text' in line:
 				chunk.append(line)
@@ -184,7 +183,7 @@ def plot_line(dic, linecolor, lang_tot):
 		for i in range (1, len(xlist) + 1):
 			x.append(i)
 	else:	
-		# Frequency per million or per hundred
+		# Frequency per million
 		ytitle = 'Frequenz per 100'
 		for i in range (min_year, max_year + 1):
 			if str(i + 0.1) in dic:
