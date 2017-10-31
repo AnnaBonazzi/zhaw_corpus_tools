@@ -74,12 +74,12 @@ for lang in langs:
 		for line in f:
 			if '</text>' not in line: # Works text by text
 				if '<' not in line:
-					chunk.append(line.split("\t")[units[unit]])#.decode('utf-8'))
+					chunk.append(line.split("\t")[units[unit]].decode('utf-8'))
 				elif '<text' in line or '</s' in line:
 					chunk.append(line)
 				
 			else: # Meets text end, works on temporary text chunk
-				chunk.append(line)#.decode('utf-8'))
+				chunk.append(line.decode('utf-8'))
 			  	# Searches for chosen lang/class combination
 				regex = re.search('class="(.*?)".*?language="'+lang+'".*?', ''.join(chunk))
 				# Filters for regex
@@ -140,7 +140,7 @@ for lang in langs:
 					count += 1
 					# Counts frequency per million 
 					pmi = float('{:.2f}'.format(int(tup[1]) * 1000000 / tot_grams))
-					out.write(str(pmi) + '\t' + str(tup[1]) + '\t' + str(' '.join(tup[0])) + '\n')
+					out.write(str(pmi) + '\t' + str(tup[1])+ ' '.join(tup[0]).encode('utf-8') + '\n')
 					
 	sorted_tuples = {}
 				
