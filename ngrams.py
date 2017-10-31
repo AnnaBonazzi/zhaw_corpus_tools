@@ -37,9 +37,8 @@ with open (output_file, 'a') as out:
 #------------------------------
 # VARIABLES FOR USER TO CHANGE
 
-#input_file = '/home/bonz/Documents/Corpora/der_hobbit.txt'
-input_file = '/home/bonz/Documents/Corpora/geothermie_test2.vrt'
-output_folder = '/home/bonz/Documents/Corpus_work/GEothermie2020/ngrams/word_ngrams/'
+input_file = '/path/to/corpus_file.vrt'
+output_folder = '/path/to/ngrams_folder/'
 
 langs = ['it', 'de', 'fr', 'en']
 unit = 'wordform' # 'wordform', 'pos', 'lemma'
@@ -49,7 +48,7 @@ min_ = 5; max_ = 5 # Ngram window with sci-kit learn
 min_freq = 2 # Minimum ngram frequency
 max_number = 500 # Number of ngrams to show
 
-#searchword = 'hobbit' # Comment out if not needed
+searchword = 'hobbit' # Comment out if not needed
 #------------------------------
 
 from sklearn.metrics.pairwise import cosine_similarity
